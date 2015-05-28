@@ -7,6 +7,11 @@
 	<body>
 		<h1>Rango says... </h1>
 		hello world! <strong>{{ bold_message }}</strong><br />
+		<ul>
+			{% for category in categories %}
+			<li>{{ category.name }}: {{ category.likes }}</li>
+			{% endfor %}
+		</ul>
 		<a href="/rango/about/">About</a><br />
 		<img src="{% static "images/rango.jpg" %}" alt="Picture of rango">
 	</body>
