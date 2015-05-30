@@ -21,6 +21,7 @@ def category(request, category_name_slug):
         context_dict['pages'] = pages
 
         context_dict['category'] = category
+        context_dict['category_name_slug'] = category_name_slug
 
     except Category.DoesNotExist:
         pass
@@ -51,7 +52,7 @@ def add_page(request, category_name_slug):
         form = PageForm(request.POST)
         if form.is_valid():
             if cat:
-                form.save(commit=False)
+                page = form.save(commit=False)
                 page.category = cat
                 page.views = 0
                 page.save()
@@ -60,7 +61,7 @@ def add_page(request, category_name_slug):
             print form.errors
     else:
         form = PageForm()
-
+    print cat.slug
     context_dict = {'form':form, 'category': cat}
 
     return render(request, 'rango/add_page.html', context_dict)
