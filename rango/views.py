@@ -14,6 +14,8 @@ def index(request):
     context_dict['top_pages'] = most_viewed_pages
     return render(request, "rango/index.html", context_dict)
 
+def about(request):
+    return HttpResponse("This is about")
 
 def category(request, category_name_slug):
     context_dict = {}
@@ -40,7 +42,7 @@ def add_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return index(request)
+            return HttpResponseRedirect('/rango/')
         else:
             print form.errors
     else:
@@ -63,6 +65,7 @@ def add_page(request, category_name_slug):
                 page.category = cat
                 page.views = 0
                 page.save()
+                return HttpResponseRedirect('/rango/category/{}/'.format(category_name_slug))
                 return category(request, category_name_slug)
         else:
             print form.errors

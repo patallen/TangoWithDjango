@@ -1,45 +1,25 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-	<head>
-		<title>Rango</title>
-	</head>
-	<body>
-		<h1>Rango says... hello world!</h1>
-		{% if categories %}
-			<ul>
-				{% for category in categories %}
-				<li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
-				{% endfor %}
-			</ul>
-		{% else %}
-			<strong>There are no categories present.</strong>
-		{% endif %}
-
-		<h2>Top Pages</h2>
-		{% if top_pages %}
-			<ul>
-			{% for page in top_pages %}
-				<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+{% extends 'rango/base.html' %}	
+{% load staticfiles %}
+{% block body_block %}
+	<h1>Rango says... hello world!</h1>
+	{% if categories %}
+		<ul>
+			{% for category in categories %}
+			<li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
 			{% endfor %}
-			</ul>
-		{% else %}
-			<strong>Currently no top pages</strong>
-		{% endif %}
+		</ul>
+	{% else %}
+		<strong>There are no categories present.</strong>
+	{% endif %}
 
-		{% if user.is_authenticated %}
-		<a href="/rango/restricted/">Restricted Page</a><br />
-		<a href="/rango/logout/">Logout</a><br />
-		{% else %}
-		<a href="/rango/register/">Register Here</a><br />
-		<a href="/rango/login/">Login</a><br />
-		{% endif %}
-
-		<a href="/rango/about/">About</a><br />
-		
-		{% if user.is_authenticated %}
-		<a href="/rango/add_category/">Add a New Category</a><br />
-		{% endif %}
-	</body>
-</html>
-
+	<h2>Top Pages</h2>
+	{% if top_pages %}
+		<ul>
+		{% for page in top_pages %}
+			<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<strong>Currently no top pages</strong>
+	{% endif %}
+{% endblock %}
